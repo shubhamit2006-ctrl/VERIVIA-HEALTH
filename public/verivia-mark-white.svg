@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120" fill="none">
+  <defs>
+    <linearGradient id="mwCyan" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0284C7"/>
+      <stop offset="30%" stop-color="#00B4D8"/>
+      <stop offset="70%" stop-color="#38BDF8"/>
+      <stop offset="100%" stop-color="#BAE6FD"/>
+    </linearGradient>
+    <linearGradient id="mwOrbit" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0096C7"/>
+      <stop offset="50%" stop-color="#38BDF8"/>
+      <stop offset="100%" stop-color="#FFFFFF"/>
+    </linearGradient>
+  </defs>
+
+  <g transform="translate(-135, -20) scale(0.52)">
+    <!-- White Left Wing of 'V' -->
+    <path d="M 320 65 C 305 68, 298 90, 310 120 C 328 165, 375 220, 442 248 C 440 215, 428 175, 410 135 C 395 102, 380 75, 348 66 Z" fill="#FFFFFF"/>
+    
+    <!-- White Figure Head -->
+    <circle cx="475" cy="78" r="20" fill="#FFFFFF"/>
+    <!-- Cyan Figure Body -->
+    <path d="M 470 106 C 455 120, 435 138, 420 162 C 432 150, 448 135, 465 125 C 458 152, 450 195, 442 248 C 458 205, 482 152, 510 118 C 536 86, 568 62, 595 48 C 580 66, 550 102, 526 136 C 498 175, 468 220, 442 248 C 438 215, 445 160, 452 128 C 442 138, 432 150, 420 162 C 435 132, 455 115, 470 106 Z" fill="url(#mwCyan)"/>
+    
+    <!-- Glowing Swoosh -->
+    <path d="M 345 192 C 330 205, 338 225, 365 240 C 405 258, 475 258, 545 220 C 605 186, 642 145, 658 116 C 650 128, 612 165, 552 198 C 485 234, 418 238, 375 225 C 348 216, 342 202, 345 192 Z" fill="url(#mwOrbit)"/>
+
+    <!-- White Airplane -->
+    <g transform="translate(658, 102) rotate(-42)">
+      <path d="M 0 -22 C 3 -22, 5.5 -18, 5.5 -8 L 5.5 6 L 26 15 L 26 21 L 5.5 16 L 5.5 28 L 12 34 L 12 38 L 0 36 L -12 38 L -12 34 L -5.5 28 L -5.5 16 L -26 21 L -26 15 L -5.5 6 L -5.5 -8 C -5.5 -18, -3 -22, 0 -22 Z" fill="#FFFFFF"/>
+    </g>
+  </g>
+</svg>

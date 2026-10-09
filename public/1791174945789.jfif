@@ -1,0 +1,171 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 450" width="900" height="450" fill="none">
+  <defs>
+    <!-- Royal Navy Wing Gradient -->
+    <linearGradient id="navyWing" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#08244B"/>
+      <stop offset="35%" stop-color="#0B3A75"/>
+      <stop offset="70%" stop-color="#0F549E"/>
+      <stop offset="100%" stop-color="#092652"/>
+    </linearGradient>
+
+    <!-- Navy Wing Inner Shadow/Depth -->
+    <linearGradient id="navyWingShade" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#051833"/>
+      <stop offset="100%" stop-color="#0D4386"/>
+    </linearGradient>
+
+    <!-- Cyan Health & Vitality Figure Gradient -->
+    <linearGradient id="cyanFigure" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0077B6"/>
+      <stop offset="30%" stop-color="#0096C7"/>
+      <stop offset="70%" stop-color="#00B4D8"/>
+      <stop offset="100%" stop-color="#48CAE4"/>
+    </linearGradient>
+
+    <!-- Orbit Swoosh Gradient -->
+    <linearGradient id="cyanOrbit" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0096C7"/>
+      <stop offset="50%" stop-color="#00B4D8"/>
+      <stop offset="100%" stop-color="#90E0EF"/>
+    </linearGradient>
+
+    <!-- Wave on letter A -->
+    <linearGradient id="cyanWave" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0077B6"/>
+      <stop offset="50%" stop-color="#00B4D8"/>
+      <stop offset="100%" stop-color="#48CAE4"/>
+    </linearGradient>
+  </defs>
+
+  <!-- EMBLEM ICON (Centered around X=450, Y=140) -->
+  <g id="logo-emblem">
+    <!-- Deep Navy Left Wing of 'V' -->
+    <path d="M 320 65 
+             C 305 68, 298 90, 310 120 
+             C 328 165, 375 220, 442 248 
+             C 440 215, 428 175, 410 135 
+             C 395 102, 380 75, 348 66 Z" 
+          fill="url(#navyWing)"/>
+
+    <path d="M 320 65 
+             C 314 80, 318 105, 335 140 
+             C 358 185, 400 230, 442 248 
+             C 434 220, 425 185, 412 150 
+             C 395 105, 365 72, 320 65 Z" 
+          fill="url(#navyWingShade)" opacity="0.55"/>
+
+    <!-- Cyan Health & Vitality Figure (Head & Upstretched Arms) -->
+    <!-- Head -->
+    <circle cx="475" cy="78" r="20" fill="url(#cyanFigure)"/>
+
+    <!-- Left Torso & Right Upraised Wing/Arm -->
+    <path d="M 470 106 
+             C 455 120, 435 138, 420 162 
+             C 432 150, 448 135, 465 125 
+             C 458 152, 450 195, 442 248 
+             C 458 205, 482 152, 510 118 
+             C 536 86, 568 62, 595 48 
+             C 580 66, 550 102, 526 136 
+             C 498 175, 468 220, 442 248 
+             C 438 215, 445 160, 452 128 
+             C 442 138, 432 150, 420 162 
+             C 435 132, 455 115, 470 106 Z" 
+          fill="url(#cyanFigure)"/>
+
+    <!-- Left inner arm curve -->
+    <path d="M 465 106
+             C 450 120, 430 145, 418 175
+             C 430 155, 446 135, 468 122 Z" 
+          fill="#00B4D8"/>
+
+    <!-- Dynamic Orbital Swoosh Ring looping under the V -->
+    <path d="M 345 192 
+             C 330 205, 338 225, 365 240 
+             C 405 258, 475 258, 545 220 
+             C 605 186, 642 145, 658 116 
+             C 650 128, 612 165, 552 198 
+             C 485 234, 418 238, 375 225 
+             C 348 216, 342 202, 345 192 Z" 
+          fill="url(#cyanOrbit)"/>
+
+    <!-- International Travel Airplane flying up to top-right -->
+    <g transform="translate(658, 102) rotate(-42)">
+      <!-- Aircraft Fuselage -->
+      <path d="M 0 -22 
+               C 3 -22, 5.5 -18, 5.5 -8 
+               L 5.5 6 
+               L 26 15 
+               L 26 21 
+               L 5.5 16 
+               L 5.5 28 
+               L 12 34 
+               L 12 38 
+               L 0 36 
+               L -12 38 
+               L -12 34 
+               L -5.5 28 
+               L -5.5 16 
+               L -26 21 
+               L -26 15 
+               L -5.5 6 
+               L -5.5 -8 
+               C -5.5 -18, -3 -22, 0 -22 Z" 
+            fill="#0A3366"/>
+    </g>
+  </g>
+
+  <!-- TYPOGRAPHY: VERIVIA -->
+  <g id="logo-brand-verivia" transform="translate(450, 305)" text-anchor="middle">
+    <text font-family="'Poppins', 'Montserrat', 'Helvetica Neue', sans-serif" 
+          font-weight="900" 
+          font-size="68" 
+          letter-spacing="6" 
+          fill="#08284D">
+      VERIVI<tspan letter-spacing="0">A</tspan>
+    </text>
+
+    <!-- Signature Cyan Wave Accent inside the letter A -->
+    <path d="M 200 -16 
+             C 210 -10, 220 -10, 230 -18 
+             C 240 -26, 250 -22, 258 -17
+             C 250 -14, 240 -16, 230 -10
+             C 220 -4, 210 -4, 200 -16 Z" 
+          fill="url(#cyanWave)"/>
+  </g>
+
+  <!-- — HEALTH — -->
+  <g id="logo-brand-global" transform="translate(450, 345)">
+    <line x1="-240" y1="-7" x2="-105" y2="-7" stroke="#0085CA" stroke-width="3" stroke-linecap="round"/>
+    <text text-anchor="middle" 
+          font-family="'Poppins', 'Montserrat', sans-serif" 
+          font-weight="800" 
+          font-size="28" 
+          letter-spacing="10" 
+          fill="#0085CA">
+      HEALTH
+    </text>
+    <line x1="105" y1="-7" x2="240" y2="-7" stroke="#0085CA" stroke-width="3" stroke-linecap="round"/>
+  </g>
+
+  <!-- International Patient Services -->
+  <text x="450" y="380" 
+        text-anchor="middle" 
+        font-family="'Inter', 'Segoe UI', system-ui, sans-serif" 
+        font-weight="700" 
+        font-size="22" 
+        letter-spacing="2" 
+        fill="#08284D">
+    International Patient Services
+  </text>
+
+  <!-- Tagline: Bold, Crisp and Clearly Visible -->
+  <text x="450" y="414" 
+        text-anchor="middle" 
+        font-family="'Inter', 'Segoe UI', system-ui, sans-serif" 
+        font-weight="700" 
+        font-size="21" 
+        letter-spacing="0.5" 
+        fill="#08284D">
+    Your Global Gateway to Trusted Healthcare in India
+  </text>
+</svg>

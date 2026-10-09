@@ -1,0 +1,6 @@
+{
+  "name": "MedGlobal India - Medical Value Travel",
+  "description": "International medical-value-travel and patient facilitation platform connecting global patients with accredited hospitals, experienced specialists, transparent indicative pricing, and end-to-end travel support in India.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

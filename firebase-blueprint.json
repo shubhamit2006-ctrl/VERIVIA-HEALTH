@@ -1,0 +1,296 @@
+{
+  "entities": {
+    "brandSettings": {
+      "title": "BrandSettings",
+      "description": "Global website configuration, brand name, contact numbers, and emergency hotline",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string", "maxLength": 100 },
+        "tagline": { "type": "string", "maxLength": 200 },
+        "phone": { "type": "string", "maxLength": 50 },
+        "whatsapp": { "type": "string", "maxLength": 50 },
+        "email": { "type": "string", "maxLength": 100 },
+        "address": { "type": "string", "maxLength": 300 },
+        "primaryCtaText": { "type": "string", "maxLength": 60 }
+      },
+      "required": ["name", "phone", "email"]
+    },
+    "treatment": {
+      "title": "Treatment",
+      "description": "Tertiary clinical specialty or medical procedure",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string", "maxLength": 150 },
+        "category": { "type": "string", "maxLength": 100 },
+        "slug": { "type": "string", "maxLength": 150 },
+        "shortDescription": { "type": "string", "maxLength": 500 },
+        "fullDescription": { "type": "string", "maxLength": 5000 },
+        "icon": { "type": "string", "maxLength": 50 },
+        "coverImage": { "type": "string", "maxLength": 1000 },
+        "indicativeCostUSD": { "type": "number" },
+        "indicativeCostUKP": { "type": "number" },
+        "indicativeCostEUR": { "type": "number" },
+        "indicativeCostAED": { "type": "number" },
+        "costNotes": { "type": "string", "maxLength": 500 },
+        "hospitalStayDays": { "type": "string", "maxLength": 50 },
+        "totalStayIndiaDays": { "type": "string", "maxLength": 50 },
+        "successRate": { "type": "string", "maxLength": 50 },
+        "displayOrder": { "type": "number" }
+      },
+      "required": ["name", "category", "slug", "indicativeCostUSD"]
+    },
+    "hospital": {
+      "title": "Hospital",
+      "description": "NABH/JCI accredited partner medical center in India",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string", "maxLength": 200 },
+        "slug": { "type": "string", "maxLength": 200 },
+        "city": { "type": "string", "maxLength": 100 },
+        "state": { "type": "string", "maxLength": 100 },
+        "address": { "type": "string", "maxLength": 300 },
+        "establishedYear": { "type": "number" },
+        "bedCount": { "type": "number" },
+        "icuBeds": { "type": "number" },
+        "otRooms": { "type": "number" },
+        "airportDistanceKm": { "type": "number" },
+        "rating": { "type": "number" },
+        "reviewCount": { "type": "number" },
+        "coverImage": { "type": "string", "maxLength": 1000 },
+        "description": { "type": "string", "maxLength": 5000 },
+        "displayOrder": { "type": "number" }
+      },
+      "required": ["name", "slug", "city", "bedCount"]
+    },
+    "doctor": {
+      "title": "Doctor",
+      "description": "Accredited specialist surgeon or senior consultant",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string", "maxLength": 150 },
+        "slug": { "type": "string", "maxLength": 150 },
+        "designation": { "type": "string", "maxLength": 150 },
+        "speciality": { "type": "string", "maxLength": 150 },
+        "subSpeciality": { "type": "string", "maxLength": 200 },
+        "hospitalId": { "type": "string", "maxLength": 100 },
+        "hospitalName": { "type": "string", "maxLength": 200 },
+        "experienceYears": { "type": "number" },
+        "education": { "type": "array" },
+        "certifications": { "type": "array" },
+        "biography": { "type": "string", "maxLength": 5000 },
+        "expertise": { "type": "array" },
+        "procedures": { "type": "array" },
+        "languages": { "type": "array" },
+        "photograph": { "type": "string" },
+        "consultationOptions": { "type": "array" },
+        "relatedTreatments": { "type": "array" },
+        "published": { "type": "boolean" },
+        "featured": { "type": "boolean" },
+        "displayOrder": { "type": "number" }
+      },
+      "required": ["name", "slug", "speciality", "hospitalName"]
+    },
+    "treatmentPackage": {
+      "title": "TreatmentPackage",
+      "description": "Indicative all-inclusive medical value travel package",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "treatmentId": { "type": "string", "maxLength": 100 },
+        "treatmentName": { "type": "string", "maxLength": 150 },
+        "title": { "type": "string", "maxLength": 200 },
+        "hospitalName": { "type": "string", "maxLength": 200 },
+        "city": { "type": "string", "maxLength": 100 },
+        "costUSD": { "type": "number" },
+        "costUKP": { "type": "number" },
+        "costEUR": { "type": "number" },
+        "costAED": { "type": "number" },
+        "hospitalStayDays": { "type": "string", "maxLength": 50 },
+        "hotelStayDays": { "type": "string", "maxLength": 50 },
+        "displayOrder": { "type": "number" }
+      },
+      "required": ["title", "treatmentName", "costUSD"]
+    },
+    "hotel": {
+      "title": "Hotel",
+      "description": "Recovery hotel or serviced accommodation near hospital partners",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string", "maxLength": 200 },
+        "slug": { "type": "string", "maxLength": 200 },
+        "stars": { "type": "number" },
+        "city": { "type": "string", "maxLength": 100 },
+        "location": { "type": "string", "maxLength": 200 },
+        "coverImage": { "type": "string" },
+        "gallery": { "type": "array" },
+        "distanceFromHospital": { "type": "string", "maxLength": 200 },
+        "distanceFromAirport": { "type": "string", "maxLength": 200 },
+        "startingPricePerNightUSD": { "type": "number" },
+        "amenities": { "type": "array" },
+        "familyFriendly": { "type": "boolean" },
+        "wheelchairAccessible": { "type": "boolean" },
+        "longStayAvailable": { "type": "boolean" },
+        "description": { "type": "string", "maxLength": 5000 },
+        "associatedHospitalIds": { "type": "array" },
+        "contactPhone": { "type": "string", "maxLength": 50 },
+        "bookingNotes": { "type": "string", "maxLength": 1000 },
+        "published": { "type": "boolean" },
+        "displayOrder": { "type": "number" }
+      },
+      "required": ["name", "slug", "city", "startingPricePerNightUSD"]
+    },
+    "testimonial": {
+      "title": "Testimonial",
+      "description": "Consented international patient story and outcome verification",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "patientName": { "type": "string", "maxLength": 100 },
+        "country": { "type": "string", "maxLength": 100 },
+        "countryFlag": { "type": "string", "maxLength": 20 },
+        "treatmentName": { "type": "string", "maxLength": 150 },
+        "hospitalName": { "type": "string", "maxLength": 200 },
+        "quote": { "type": "string", "maxLength": 2000 },
+        "fullStory": { "type": "string", "maxLength": 5000 },
+        "avatarUrl": { "type": "string", "maxLength": 1000 },
+        "year": { "type": "number" },
+        "displayOrder": { "type": "number" }
+      },
+      "required": ["patientName", "country", "treatmentName", "quote"]
+    },
+    "faqItem": {
+      "title": "FAQItem",
+      "description": "Frequently asked question regarding medical travel to India",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "category": { "type": "string", "maxLength": 100 },
+        "question": { "type": "string", "maxLength": 300 },
+        "answer": { "type": "string", "maxLength": 4000 },
+        "displayOrder": { "type": "number" }
+      },
+      "required": ["category", "question", "answer"]
+    },
+    "patientLead": {
+      "title": "PatientLead",
+      "description": "International patient enquiry with clinical history, medical documents, travel requirements, and coordinator notes",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "fullName": { "type": "string", "maxLength": 150 },
+        "patientName": { "type": "string", "maxLength": 150 },
+        "email": { "type": "string", "maxLength": 120 },
+        "whatsapp": { "type": "string", "maxLength": 60 },
+        "phone": { "type": "string", "maxLength": 60 },
+        "preferredCommunication": { "type": "string", "enum": ["WhatsApp", "Email", "Phone Call"] },
+        "country": { "type": "string", "maxLength": 100 },
+        "city": { "type": "string", "maxLength": 100 },
+        "age": { "type": "string", "maxLength": 10 },
+        "gender": { "type": "string", "maxLength": 20 },
+        "treatmentRequired": { "type": "string", "maxLength": 200 },
+        "preferredTreatment": { "type": "string", "maxLength": 200 },
+        "preferredSpeciality": { "type": "string", "maxLength": 200 },
+        "preferredHospital": { "type": "string", "maxLength": 200 },
+        "preferredDoctor": { "type": "string", "maxLength": 150 },
+        "preferredCity": { "type": "string", "maxLength": 100 },
+        "medicalCondition": { "type": "string", "maxLength": 500 },
+        "medicalDescription": { "type": "string", "maxLength": 5000 },
+        "expectedTravelMonth": { "type": "string", "maxLength": 100 },
+        "tentativeTravelMonth": { "type": "string", "maxLength": 100 },
+        "accompanyingPersons": { "type": "string", "maxLength": 50 },
+        "accommodationRequired": { "type": "boolean" },
+        "airportAssistanceRequired": { "type": "boolean" },
+        "documents": { "type": "array" },
+        "privacyConsent": { "type": "boolean" },
+        "consentAgreed": { "type": "boolean" },
+        "hospitalSharingConsent": { "type": "boolean" },
+        "status": { "type": "string", "enum": ["New", "Contacted", "Qualified", "Treatment Planning", "Converted", "Closed", "Rejected"] },
+        "assignedStaff": { "type": "string", "maxLength": 100 },
+        "assignedCoordinator": { "type": "string", "maxLength": 100 },
+        "internalNotes": { "type": "string", "maxLength": 5000 },
+        "createdAt": { "type": "string", "maxLength": 50 },
+        "updatedAt": { "type": "string", "maxLength": 50 }
+      },
+      "required": ["email", "country", "createdAt"]
+    },
+    "adminUser": {
+      "title": "AdminUser",
+      "description": "Authorized administrator record for system management access",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string", "maxLength": 150 },
+        "role": { "type": "string", "enum": ["admin"] },
+        "displayName": { "type": "string", "maxLength": 150 },
+        "photoURL": { "type": "string", "maxLength": 500 },
+        "createdAt": { "type": "string", "maxLength": 50 },
+        "lastLoginAt": { "type": "string", "maxLength": 50 }
+      },
+      "required": ["uid", "email", "role"]
+    },
+    "journeyStep": {
+      "title": "JourneyStep",
+      "description": "Patient care timeline step for the How It Works section",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "stepNumber": { "type": "number" },
+        "title": { "type": "string", "maxLength": 150 },
+        "description": { "type": "string", "maxLength": 1000 },
+        "icon": { "type": "string", "maxLength": 50 }
+      },
+      "required": ["stepNumber", "title", "description"]
+    }
+  },
+  "firestore": {
+    "/journeySteps/{stepId}": {
+      "schema": { "$ref": "#/entities/journeyStep" },
+      "description": "How It Works patient journey steps"
+    },
+    "/settings/{settingId}": {
+      "schema": { "$ref": "#/entities/brandSettings" },
+      "description": "Site-wide brand configuration and contact details"
+    },
+    "/treatments/{treatmentId}": {
+      "schema": { "$ref": "#/entities/treatment" },
+      "description": "Clinical treatments catalogue and indicative pricing"
+    },
+    "/hospitals/{hospitalId}": {
+      "schema": { "$ref": "#/entities/hospital" },
+      "description": "Accredited partner hospital directory"
+    },
+    "/doctors/{doctorId}": {
+      "schema": { "$ref": "#/entities/doctor" },
+      "description": "Specialist doctors and surgeons directory"
+    },
+    "/packages/{packageId}": {
+      "schema": { "$ref": "#/entities/treatmentPackage" },
+      "description": "Indicative medical travel packages"
+    },
+    "/hotels/{hotelId}": {
+      "schema": { "$ref": "#/entities/hotel" },
+      "description": "Recovery hotels and patient accommodation"
+    },
+    "/testimonials/{testimonialId}": {
+      "schema": { "$ref": "#/entities/testimonial" },
+      "description": "Consented patient testimonials"
+    },
+    "/faqs/{faqId}": {
+      "schema": { "$ref": "#/entities/faqItem" },
+      "description": "Frequently asked questions"
+    },
+    "/leads/{leadId}": {
+      "schema": { "$ref": "#/entities/patientLead" },
+      "description": "Patient enquiry and coordinator pipeline"
+    },
+    "/admins/{adminId}": {
+      "schema": { "$ref": "#/entities/adminUser" },
+      "description": "Authorized administrator records controlling backend access"
+    }
+  }
+}

@@ -1,0 +1,159 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 80" width="540" height="80" fill="none">
+  <defs>
+    <!-- White / Luminous Blue Wing Gradient for Dark Backgrounds -->
+    <linearGradient id="footerWhiteWing" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="70%" stop-color="#F0F9FF"/>
+      <stop offset="100%" stop-color="#E0F2FE"/>
+    </linearGradient>
+
+    <!-- Cyan Health & Vitality Figure Gradient -->
+    <linearGradient id="footerCyanFigure" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0284C7"/>
+      <stop offset="40%" stop-color="#00B4D8"/>
+      <stop offset="80%" stop-color="#38BDF8"/>
+      <stop offset="100%" stop-color="#FFFFFF"/>
+    </linearGradient>
+
+    <!-- Glowing Orbit Swoosh Gradient -->
+    <linearGradient id="footerCyanOrbit" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0096C7"/>
+      <stop offset="50%" stop-color="#38BDF8"/>
+      <stop offset="100%" stop-color="#FFFFFF"/>
+    </linearGradient>
+
+    <!-- Wave on letter A -->
+    <linearGradient id="footerCyanWave" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0284C7"/>
+      <stop offset="50%" stop-color="#38BDF8"/>
+      <stop offset="100%" stop-color="#7DD3FC"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Left Emblem (High-Contrast White & Glowing Cyan for Dark Themes) -->
+  <g transform="translate(6, 4) scale(0.338) translate(-305, -45)">
+    <!-- Crisp White Left Wing of 'V' -->
+    <path d="M 320 65 
+             C 305 68, 298 90, 310 120 
+             C 328 165, 375 220, 442 248 
+             C 440 215, 428 175, 410 135 
+             C 395 102, 380 75, 348 66 Z" 
+          fill="url(#footerWhiteWing)"/>
+
+    <path d="M 320 65 
+             C 314 80, 318 105, 335 140 
+             C 358 185, 400 230, 442 248 
+             C 434 220, 425 185, 412 150 
+             C 395 105, 365 72, 320 65 Z" 
+          fill="#38BDF8" opacity="0.35"/>
+
+    <!-- Glowing Vitality Figure Head -->
+    <circle cx="475" cy="78" r="20" fill="#FFFFFF"/>
+
+    <!-- Figure Torso / Wings -->
+    <path d="M 470 106 
+             C 455 120, 435 138, 420 162 
+             C 432 150, 448 135, 465 125 
+             C 458 152, 450 195, 442 248 
+             C 458 205, 482 152, 510 118 
+             C 536 86, 568 62, 595 48 
+             C 580 66, 550 102, 526 136 
+             C 498 175, 468 220, 442 248 
+             C 438 215, 445 160, 452 128 
+             C 442 138, 432 150, 420 162 
+             C 435 132, 455 115, 470 106 Z" 
+          fill="url(#footerCyanFigure)"/>
+
+    <path d="M 465 106
+             C 450 120, 430 145, 418 175
+             C 430 155, 446 135, 468 122 Z" 
+          fill="#38BDF8"/>
+
+    <!-- Luminous Orbital Swoosh Ring looping under the V -->
+    <path d="M 345 192 
+             C 330 205, 338 225, 365 240 
+             C 405 258, 475 258, 545 220 
+             C 605 186, 642 145, 658 116 
+             C 650 128, 612 165, 552 198 
+             C 485 234, 418 238, 375 225 
+             C 348 216, 342 202, 345 192 Z" 
+          fill="url(#footerCyanOrbit)"/>
+
+    <!-- Crisp White Airplane soaring up to top-right -->
+    <g transform="translate(658, 102) rotate(-42)">
+      <path d="M 0 -22 
+               C 3 -22, 5.5 -18, 5.5 -8 
+               L 5.5 6 
+               L 26 15 
+               L 26 21 
+               L 5.5 16 
+               L 5.5 28 
+               L 12 34 
+               L 12 38 
+               L 0 36 
+               L -12 38 
+               L -12 34 
+               L -5.5 28 
+               L -5.5 16 
+               L -26 21 
+               L -26 15 
+               L -5.5 6 
+               L -5.5 -8 
+               C -5.5 -18, -3 -22, 0 -22 Z" 
+            fill="#FFFFFF"/>
+    </g>
+  </g>
+
+  <!-- Typography Right Block: All in Pure White for 100% Readability on Dark Backgrounds -->
+  <g transform="translate(142, 4)">
+    <!-- Top Line: VERIVIA HEALTH -->
+    <g transform="translate(0, 28)">
+      <!-- VERIVIA in Solid Pure White -->
+      <text font-family="'Poppins', 'Montserrat', -apple-system, sans-serif" 
+            font-weight="900" 
+            font-size="33" 
+            letter-spacing="2.2" 
+            fill="#FFFFFF">
+        VERIVIA
+      </text>
+
+      <!-- Wave Accent inside letter A -->
+      <path d="M 152 -7 
+               C 159 -2, 167 -2, 174 -9 
+               C 181 -14, 187 -12, 193 -8 
+               C 187 -6, 181 -8, 174 -3 
+               C 167 2, 159 2, 152 -7 Z" 
+            fill="url(#footerCyanWave)"/>
+
+      <!-- HEALTH in Solid Pure White -->
+      <text x="202" y="0" 
+            font-family="'Poppins', 'Montserrat', -apple-system, sans-serif" 
+            font-weight="800" 
+            font-size="28" 
+            letter-spacing="4" 
+            fill="#FFFFFF">
+        HEALTH
+      </text>
+    </g>
+
+    <!-- Subtitle: INTERNATIONAL PATIENT SERVICES in Pure White -->
+    <text x="2" y="50" 
+          font-family="'Inter', 'Segoe UI', system-ui, sans-serif" 
+          font-weight="700" 
+          font-size="13" 
+          letter-spacing="1.8" 
+          fill="#FFFFFF">
+      INTERNATIONAL PATIENT SERVICES
+    </text>
+
+    <!-- Tagline: Bold Pure White for Total Legibility -->
+    <text x="2" y="70" 
+          font-family="'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif" 
+          font-weight="700" 
+          font-size="13.5" 
+          letter-spacing="0.2" 
+          fill="#FFFFFF">
+      Your Global Gateway to Trusted Healthcare in India
+    </text>
+  </g>
+</svg>
