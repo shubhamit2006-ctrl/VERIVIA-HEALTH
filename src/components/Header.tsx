@@ -33,6 +33,7 @@ export const Header: React.FC<HeaderProps> = ({ currentRoute, navigate, openEnqu
   const [currencyDropdownOpen, setCurrencyDropdownOpen] = useState(false);
 
   const navLinks = [
+    { label: 'About Us', route: '/about-us' },
     { label: 'Treatments', route: '/treatments' },
     { label: 'Hospitals', route: '/hospitals' },
     { label: 'Specialists', route: '/doctors' },

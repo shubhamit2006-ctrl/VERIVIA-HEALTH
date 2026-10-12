@@ -34,6 +34,48 @@ export interface WhyIndiaPoint {
   displayOrder: number;
 }
 
+export interface ComplementaryStrength {
+  id: string;
+  title: string;
+  description: string;
+}
+
+export interface AboutUsContent {
+  id?: string;
+  heroEyebrow: string;
+  heroHeadline: string;
+  heroSupportingText: string;
+  primaryCtaText: string;
+  whoWeAreHeading: string;
+  whoWeAreContent: string;
+  leadershipHeading: string;
+  leadershipSupportingText: string;
+  strengthsHeading: string;
+  strengthsDescription: string;
+  strengths: ComplementaryStrength[];
+  commitmentHeading: string;
+  commitmentContent: string;
+  brandTagline: string;
+  closingCtaHeading: string;
+  closingCtaSupportingText: string;
+  closingCtaButtonLabel: string;
+  updatedAt?: string;
+}
+
+export interface TeamMember {
+  id: string;
+  fullName: string;
+  designation: string; // e.g. "Founder" | "Co-Founder" | custom
+  professionalDescriptor: string;
+  biography: string;
+  photoUrl?: string;
+  photoStoragePath?: string;
+  displayOrder: number;
+  published: boolean;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
 export interface Treatment {
   id: string;
   name: string;

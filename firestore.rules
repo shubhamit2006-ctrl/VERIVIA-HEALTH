@@ -82,6 +82,17 @@ service cloud.firestore {
       allow write: if isAdmin();
     }
 
+    // Dynamic About Us Page Content & Leadership Team
+    match /siteContent/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /aboutUsTeam/{memberId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
     // Patient enquiries: Anyone can submit a consultation lead;
     // Only authorized Admins can read, inspect documents, update, and delete patient records!
     match /leads/{leadId} {

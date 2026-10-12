@@ -41,7 +41,9 @@ import {
   LeadDocument,
   WhyIndiaPoint,
   CurrencyCode,
-  JourneyStep
+  JourneyStep,
+  AboutUsContent,
+  TeamMember
 } from '../types';
 import {
   CURRENCIES,
@@ -54,7 +56,9 @@ import {
   INITIAL_HOTELS,
   INITIAL_TESTIMONIALS,
   INITIAL_FAQS,
-  INITIAL_JOURNEY_STEPS
+  INITIAL_JOURNEY_STEPS,
+  INITIAL_ABOUT_US_CONTENT,
+  INITIAL_TEAM_MEMBERS
 } from '../initialData';
 
 export enum OperationType {
@@ -167,6 +171,14 @@ interface AppContextType {
   updateLead: (id: string, updates: Partial<PatientLead>) => Promise<void>;
   deleteLead: (id: string) => Promise<void>;
   
+  // About Us Page and Leadership Team
+  aboutUsContent: AboutUsContent;
+  teamMembers: TeamMember[];
+  updateAboutUsContent: (content: AboutUsContent) => Promise<{ success: boolean; error?: string }>;
+  saveTeamMember: (member: TeamMember) => Promise<{ success: boolean; error?: string }>;
+  deleteTeamMember: (id: string) => Promise<{ success: boolean; error?: string }>;
+  reorderTeamMembers: (members: TeamMember[]) => Promise<{ success: boolean; error?: string }>;
+
   // Reset demo data
   resetToDemoData: () => Promise<void>;
   isLoading: boolean;
@@ -232,6 +244,30 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       }
     }
     return INITIAL_JOURNEY_STEPS;
+  });
+  const [aboutUsContent, setAboutUsContent] = useState<AboutUsContent>(() => {
+    const cached = localStorage.getItem('verivia_about_content');
+    if (cached) {
+      try {
+        const parsed = JSON.parse(cached);
+        if (parsed && parsed.heroHeadline) return { ...INITIAL_ABOUT_US_CONTENT, ...parsed };
+      } catch {
+        // ignore
+      }
+    }
+    return INITIAL_ABOUT_US_CONTENT;
+  });
+  const [teamMembers, setTeamMembers] = useState<TeamMember[]>(() => {
+    const cached = localStorage.getItem('verivia_about_team');
+    if (cached) {
+      try {
+        const parsed = JSON.parse(cached);
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      } catch {
+        // ignore
+      }
+    }
+    return INITIAL_TEAM_MEMBERS;
   });
   const [leads, setLeads] = useState<PatientLead[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -506,6 +542,41 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
           }
         } catch (e) {
           console.warn('Using initial journey steps:', e);
+        }
+
+        // Load About Us Page Content
+        try {
+          const aboutDocRef = doc(db, 'siteContent', 'aboutUs');
+          const aboutSnap = await getDocFromServer(aboutDocRef).catch(() => null);
+          if (aboutSnap && aboutSnap.exists()) {
+            const data = aboutSnap.data() as AboutUsContent;
+            const merged = { ...INITIAL_ABOUT_US_CONTENT, ...data };
+            setAboutUsContent(merged);
+            localStorage.setItem('verivia_about_content', JSON.stringify(merged));
+          } else {
+            // Seed initial content document into Firestore if not present
+            setDoc(aboutDocRef, cleanFirestoreData(INITIAL_ABOUT_US_CONTENT)).catch(() => {});
+          }
+        } catch (e) {
+          console.warn('Using initial About Us content:', e);
+        }
+
+        // Load Leadership / Management Team
+        try {
+          const teamSnap = await getDocs(collection(db, 'aboutUsTeam'));
+          if (!teamSnap.empty) {
+            const items = teamSnap.docs.map(d => ({ id: d.id, ...d.data() } as TeamMember));
+            const sorted = items.sort((a, b) => a.displayOrder - b.displayOrder);
+            setTeamMembers(sorted);
+            localStorage.setItem('verivia_about_team', JSON.stringify(sorted));
+          } else {
+            // Seed initial members into Firestore if collection is empty
+            for (const member of INITIAL_TEAM_MEMBERS) {
+              setDoc(doc(db, 'aboutUsTeam', member.id), cleanFirestoreData(member)).catch(() => {});
+            }
+          }
+        } catch (e) {
+          console.warn('Using initial team members:', e);
         }
 
         // Load Leads (Fully synced with Firestore and resiliently cached in localStorage)
@@ -1169,6 +1240,106 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     }
   };
 
+  // About Us Page Content & Leadership Team CRUD
+  const updateAboutUsContent = async (content: AboutUsContent): Promise<{ success: boolean; error?: string }> => {
+    const updated: AboutUsContent = {
+      ...content,
+      updatedAt: new Date().toISOString()
+    };
+    setAboutUsContent(updated);
+    try {
+      localStorage.setItem('verivia_about_content', JSON.stringify(updated));
+    } catch {}
+
+    try {
+      await setDoc(doc(db, 'siteContent', 'aboutUs'), cleanFirestoreData(updated), { merge: true });
+      return { success: true };
+    } catch (err: any) {
+      console.error('Error saving About Us content:', err);
+      return { success: false, error: err?.message || 'Failed to save About Us content to Firestore.' };
+    }
+  };
+
+  const saveTeamMember = async (member: TeamMember): Promise<{ success: boolean; error?: string }> => {
+    const memberId = member.id || `member-${Date.now()}`;
+    const prepared: TeamMember = {
+      ...member,
+      id: memberId,
+      updatedAt: new Date().toISOString()
+    };
+
+    setTeamMembers(prev => {
+      const idx = prev.findIndex(m => m.id === memberId);
+      let next: TeamMember[];
+      if (idx >= 0) {
+        next = [...prev];
+        next[idx] = prepared;
+      } else {
+        next = [...prev, prepared];
+      }
+      const sorted = next.sort((a, b) => a.displayOrder - b.displayOrder);
+      try {
+        localStorage.setItem('verivia_about_team', JSON.stringify(sorted));
+      } catch {}
+      return sorted;
+    });
+
+    try {
+      await setDoc(doc(db, 'aboutUsTeam', memberId), cleanFirestoreData(prepared), { merge: true });
+      return { success: true };
+    } catch (err: any) {
+      console.error('Error saving team member to Firestore:', err);
+      return { success: false, error: err?.message || 'Failed to save team member to Firestore.' };
+    }
+  };
+
+  const deleteTeamMember = async (id: string): Promise<{ success: boolean; error?: string }> => {
+    // Attempt best-effort photo cleanup if storagePath exists
+    const target = teamMembers.find(m => m.id === id);
+    if (target?.photoStoragePath) {
+      try {
+        const { deleteTeamPhotoFromStorage } = await import('../utils/imageUpload');
+        await deleteTeamPhotoFromStorage(target.photoStoragePath);
+      } catch (e) {
+        console.warn('Storage cleanup note:', e);
+      }
+    }
+
+    setTeamMembers(prev => {
+      const next = prev.filter(m => m.id !== id);
+      try {
+        localStorage.setItem('verivia_about_team', JSON.stringify(next));
+      } catch {}
+      return next;
+    });
+
+    try {
+      await deleteDoc(doc(db, 'aboutUsTeam', id));
+      return { success: true };
+    } catch (err: any) {
+      console.error('Error deleting team member from Firestore:', err);
+      return { success: false, error: err?.message || 'Failed to delete member from Firestore.' };
+    }
+  };
+
+  const reorderTeamMembers = async (members: TeamMember[]): Promise<{ success: boolean; error?: string }> => {
+    const reindexed = members.map((m, idx) => ({ ...m, displayOrder: idx + 1 }));
+    setTeamMembers(reindexed);
+    try {
+      localStorage.setItem('verivia_about_team', JSON.stringify(reindexed));
+    } catch {}
+
+    try {
+      for (const m of reindexed) {
+        await setDoc(doc(db, 'aboutUsTeam', m.id), cleanFirestoreData(m), { merge: true });
+      }
+      return { success: true };
+    } catch (err: any) {
+      console.error('Error reordering team members:', err);
+      return { success: false, error: err?.message || 'Failed to persist new order to Firestore.' };
+    }
+  };
+
   const resetToDemoData = async () => {
     setIsLoading(true);
     try {
@@ -1193,6 +1364,14 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       for (const js of INITIAL_JOURNEY_STEPS) await setDoc(doc(db, 'journeySteps', js.id!), js);
       setJourneySteps(INITIAL_JOURNEY_STEPS);
       localStorage.setItem('verivia_journey_steps', JSON.stringify(INITIAL_JOURNEY_STEPS));
+
+      await setDoc(doc(db, 'siteContent', 'aboutUs'), INITIAL_ABOUT_US_CONTENT);
+      setAboutUsContent(INITIAL_ABOUT_US_CONTENT);
+      localStorage.setItem('verivia_about_content', JSON.stringify(INITIAL_ABOUT_US_CONTENT));
+
+      for (const m of INITIAL_TEAM_MEMBERS) await setDoc(doc(db, 'aboutUsTeam', m.id), m);
+      setTeamMembers(INITIAL_TEAM_MEMBERS);
+      localStorage.setItem('verivia_about_team', JSON.stringify(INITIAL_TEAM_MEMBERS));
     } catch (e) {
       console.error('Reset demo error', e);
     } finally {
@@ -1218,6 +1397,12 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         whyIndia,
         journeySteps,
         leads,
+        aboutUsContent,
+        teamMembers,
+        updateAboutUsContent,
+        saveTeamMember,
+        deleteTeamMember,
+        reorderTeamMembers,
         currentUser,
         authLoading,
         isAdminLoggedIn,

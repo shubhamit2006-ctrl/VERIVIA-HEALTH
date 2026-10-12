@@ -142,6 +142,11 @@ export const Footer: React.FC<FooterProps> = ({ navigate, openEnquiryModal }) =>
             <h4 className="text-sm font-semibold text-white uppercase tracking-wider">Patient Support</h4>
             <ul className="space-y-2 text-sm text-slate-400">
               <li>
+                <button onClick={() => navigate('/about-us')} className="hover:text-white cursor-pointer text-sky-300 font-medium">
+                  About Us
+                </button>
+              </li>
+              <li>
                 <button onClick={() => navigate('/how-it-works')} className="hover:text-white cursor-pointer">
                   Treatment Journey (13 Steps)
                 </button>

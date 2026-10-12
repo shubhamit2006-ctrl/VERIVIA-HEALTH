@@ -10,7 +10,9 @@ import {
   JourneyStep,
   WhyIndiaPoint,
   CurrencyCode,
-  CurrencyRate
+  CurrencyRate,
+  AboutUsContent,
+  TeamMember
 } from './types';
 
 export const CURRENCIES: Record<CurrencyCode, CurrencyRate> = {
@@ -52,6 +54,84 @@ export const INITIAL_BRAND_SETTINGS: BrandSettings = {
   privacyPolicyText: 'We respect patient confidentiality under international healthcare data principles. Uploaded medical reports and personal details are encrypted and shared strictly with accredited hospital clinical boards and certified specialists for treatment planning with your explicit consent.',
   termsText: 'By submitting your medical records, you authorise our patient care coordinators to seek clinical opinions and treatment estimates from verified partner hospitals in India. You maintain full autonomy over your healthcare decisions.'
 };
+
+export const INITIAL_ABOUT_US_CONTENT: AboutUsContent = {
+  heroEyebrow: 'ABOUT VERIVIA GLOBAL',
+  heroHeadline: 'Medical Understanding Meets Operational Excellence',
+  heroSupportingText:
+    'At VERIVIA GLOBAL, we believe that navigating healthcare in another country should feel less complicated and more reassuring. We aim to help international healthcare seekers explore healthcare opportunities in India with greater clarity, confidence and thoughtful coordination.',
+  primaryCtaText: 'Share Your Medical Needs',
+  whoWeAreHeading: 'Who We Are',
+  whoWeAreContent:
+    'VERIVIA GLOBAL is being built around a simple belief: exploring healthcare options across borders should be a more informed, organised and reassuring experience.\n\nIndia offers a wide range of medical expertise and healthcare services. However, international healthcare seekers may need help understanding available options, communicating with healthcare providers, coordinating appointments, organising documentation and navigating travel-related arrangements.\n\nOur aim is to make these steps easier to navigate through thoughtful assistance, clear communication and structured coordination.\n\nOur vision brings together two complementary strengths: an understanding of healthcare shaped by decades of medical experience, and an approach to service delivery shaped by technology, process excellence and effective coordination.\n\nWe believe that every healthcare journey deserves informed guidance, individual attention and a human touch.',
+  leadershipHeading: 'The People Behind Our Vision',
+  leadershipSupportingText:
+    'Different professional backgrounds. One shared commitment to a more informed and reassuring healthcare journey.',
+  strengthsHeading: 'One Vision, Complementary Strengths',
+  strengthsDescription:
+    'Healthcare requires more than medical expertise alone. Navigating care across borders can also involve understanding available options, communicating with healthcare providers, coordinating appointments, managing documentation and organising travel-related arrangements.\n\nThat is where our founders\' complementary backgrounds come together.',
+  strengths: [
+    {
+      id: 'strength-1',
+      title: 'Medical understanding',
+      description:
+        'A healthcare-aware perspective that recognises the importance of informed choices and individual circumstances.'
+    },
+    {
+      id: 'strength-2',
+      title: 'Operational excellence',
+      description:
+        'Structured processes and thoughtful coordination to make the experience easier to navigate.'
+    },
+    {
+      id: 'strength-3',
+      title: 'Technology and communication',
+      description:
+        'Clear information and organised workflows that support a more responsive service experience.'
+    },
+    {
+      id: 'strength-4',
+      title: 'A human-centred philosophy',
+      description:
+        'Respectful, personalised assistance that keeps each individual\'s needs at the centre.'
+    }
+  ],
+  commitmentHeading: 'Our Commitment',
+  commitmentContent:
+    'At VERIVIA GLOBAL, we aspire to make the international healthcare journey in India more informed, organised and reassuring.\n\nWe are committed to clear communication, personalised assistance and transparent coordination. We aim to help individuals explore available healthcare options and understand the next steps, while recognising that medical decisions belong to individuals in consultation with appropriately qualified healthcare professionals.',
+  brandTagline: 'Your Global Gateway to Trusted Healthcare in India.',
+  closingCtaHeading: 'Let Us Help You Explore Your Options',
+  closingCtaSupportingText:
+    'Every healthcare journey is different. Share your medical needs with us so that we can understand your enquiry and guide you through the appropriate next steps.',
+  closingCtaButtonLabel: 'Share Your Medical Needs'
+};
+
+export const INITIAL_TEAM_MEMBERS: TeamMember[] = [
+  {
+    id: 'dr-dk-agrawal',
+    fullName: 'Dr. D. K. Agrawal',
+    designation: 'Founder',
+    professionalDescriptor: 'Medical Experience | Public Healthcare | Holistic Healthcare',
+    biography:
+      'Dr. D. K. Agrawal brings nearly 40 years of experience across clinical practice, public healthcare and medical administration.\n\nA former Additional Director in the Uttar Pradesh Medical Health Department, he has served in clinical and public healthcare settings, bringing a longstanding medical perspective to the vision of VERIVIA GLOBAL.\n\nHis areas of professional focus include chronic disease management, infertility care for men and women, preventive healthcare and an integrated approach to wellbeing.\n\nHis experience informs our appreciation of the questions, concerns and decisions that can accompany a healthcare journey. His contribution to VERIVIA GLOBAL\'s vision is grounded in informed healthcare choices, compassionate guidance and an individual-centred approach.',
+    photoUrl: '',
+    photoStoragePath: '',
+    displayOrder: 1,
+    published: true
+  },
+  {
+    id: 'swati-soam',
+    fullName: 'Swati Soam',
+    designation: 'Co-Founder',
+    professionalDescriptor: 'Business Transformation | Technology | Operational Excellence',
+    biography:
+      'Swati Soam brings experience in enterprise technology implementation, business analysis, project management and digital transformation across India, the United States, Canada and Singapore.\n\nHer professional background includes working with platforms such as SAP SuccessFactors, EmployWise and Ramco Systems, helping organisations translate complex business requirements into structured, scalable solutions.\n\nHer strengths include stakeholder management, process improvement, agile delivery, requirements analysis and technology-enabled user experiences.\n\nAt VERIVIA GLOBAL, she brings this experience to the challenge of making healthcare coordination more organised, transparent and responsive. Her focus is on building processes and service experiences that help international healthcare seekers navigate the steps involved in exploring and arranging healthcare in India.',
+    photoUrl: '',
+    photoStoragePath: '',
+    displayOrder: 2,
+    published: true
+  }
+];
 
 export const INITIAL_WHY_INDIA: WhyIndiaPoint[] = [
   {

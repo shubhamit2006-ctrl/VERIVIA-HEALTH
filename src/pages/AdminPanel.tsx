@@ -16,11 +16,13 @@ import {
 import { VeriviaLogo } from '../components/VeriviaLogo';
 import { EditHotelModal } from '../components/EditHotelModal';
 import { EditDoctorModal } from '../components/EditDoctorModal';
+import { AboutUsAdmin } from '../components/AboutUsAdmin';
 import { downloadMedicalDocument } from '../utils/imageUpload';
 import * as XLSX from 'xlsx';
 import {
   LayoutDashboard,
   Users,
+  Info,
   Building2,
   Stethoscope,
   Activity,
@@ -138,6 +140,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ navigate }) => {
   const [activeTab, setActiveTab] = useState<
     | 'dashboard'
     | 'leads'
+    | 'aboutUs'
     | 'howItWorks'
     | 'hospitals'
     | 'doctors'
@@ -479,6 +482,16 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ navigate }) => {
                   {leads.filter(l => l.status === 'New').length}
                 </span>
               )}
+            </button>
+
+            <button
+              onClick={() => setActiveTab('aboutUs')}
+              className={`w-full text-left px-3 py-2 rounded-lg flex items-center space-x-2.5 transition-colors cursor-pointer ${
+                activeTab === 'aboutUs' ? 'bg-[#2F80C9] text-white font-semibold' : 'hover:bg-slate-800 text-slate-300'
+              }`}
+            >
+              <Info className="w-4 h-4" />
+              <span>About Us Management</span>
             </button>
 
             <button
@@ -911,6 +924,11 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ navigate }) => {
             </div>
           </div>
         )}
+
+        {/* ---------------------------------------------------- */}
+        {/* TAB: ABOUT US MANAGEMENT (PAGE CONTENT & LEADERSHIP) */}
+        {/* ---------------------------------------------------- */}
+        {activeTab === 'aboutUs' && <AboutUsAdmin />}
 
         {/* ---------------------------------------------------- */}
         {/* TAB: HOW IT WORKS / PATIENT JOURNEY (CMS EDITABLE) */}

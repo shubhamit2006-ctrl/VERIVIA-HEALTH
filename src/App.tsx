@@ -15,6 +15,7 @@ import { StayPage } from './pages/StayPage';
 import { HotelDetailPage } from './pages/HotelDetailPage';
 import { JourneyPage } from './pages/JourneyPage';
 import { FaqPage } from './pages/FaqPage';
+import { AboutPage } from './pages/AboutPage';
 import { AdminPanel } from './pages/AdminPanel';
 
 function AppContent() {
@@ -151,8 +152,13 @@ function AppContent() {
       return <JourneyPage openEnquiryModal={() => openEnquiryModal()} />;
     }
 
+    // About Us
+    if (currentPath === '/about-us' || currentPath === '/about') {
+      return <AboutPage navigate={navigate} openEnquiryModal={openEnquiryModal} />;
+    }
+
     // FAQs
-    if (currentPath === '/faq') {
+    if (currentPath === '/faq' || currentPath === '/faqs') {
       return <FaqPage />;
     }
 
