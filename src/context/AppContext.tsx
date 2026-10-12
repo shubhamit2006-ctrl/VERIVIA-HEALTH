@@ -7,7 +7,8 @@ import {
   setDoc,
   updateDoc,
   deleteDoc,
-  addDoc
+  addDoc,
+  onSnapshot
 } from 'firebase/firestore';
 import { db, auth } from '../firebase';
 import {
@@ -775,6 +776,34 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     };
 
     loadAllData();
+
+    // Real-time synchronization: immediately updates the live website when admin saves changes or photos
+    const unsubTeam = onSnapshot(collection(db, 'aboutUsTeam'), (snap) => {
+      if (!snap.empty) {
+        const items = snap.docs.map(d => ({ id: d.id, ...d.data() } as TeamMember));
+        const sorted = items.sort((a, b) => a.displayOrder - b.displayOrder);
+        setTeamMembers(sorted);
+        localStorage.setItem('verivia_about_team', JSON.stringify(sorted));
+      }
+    }, (err) => {
+      console.warn('Realtime aboutUsTeam sync notice:', err);
+    });
+
+    const unsubAbout = onSnapshot(doc(db, 'siteContent', 'aboutUs'), (snap) => {
+      if (snap.exists()) {
+        const data = snap.data() as AboutUsContent;
+        const merged = { ...INITIAL_ABOUT_US_CONTENT, ...data };
+        setAboutUsContent(merged);
+        localStorage.setItem('verivia_about_content', JSON.stringify(merged));
+      }
+    }, (err) => {
+      console.warn('Realtime siteContent sync notice:', err);
+    });
+
+    return () => {
+      unsubTeam();
+      unsubAbout();
+    };
   }, []);
 
   // Format price helper

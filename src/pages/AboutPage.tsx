@@ -1,6 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useApp } from '../context/AppContext';
 import { INITIAL_ABOUT_US_CONTENT, INITIAL_TEAM_MEMBERS } from '../initialData';
+import { TeamMember } from '../types';
+import { db, storage } from '../firebase';
+import { collection, onSnapshot } from 'firebase/firestore';
+import { ref, getDownloadURL } from 'firebase/storage';
 import {
   ShieldCheck,
   Stethoscope,
@@ -10,9 +14,7 @@ import {
   ArrowRight,
   MessageCircle,
   Sparkles,
-  Building2,
-  CheckCircle2,
-  Phone
+  CheckCircle2
 } from 'lucide-react';
 
 interface AboutPageProps {
@@ -22,16 +24,131 @@ interface AboutPageProps {
 
 const STRENGTH_ICONS = [Stethoscope, Workflow, Cpu, HeartHandshake];
 
+/**
+ * Robust Team Member Photograph Component:
+ * Pulls image from Firebase Storage if photoStoragePath is present,
+ * or from Firestore photoUrl (Data URL or Storage URL),
+ * with instant fallback to verified high-resolution static asset if needed.
+ */
+const TeamMemberPhoto: React.FC<{ member: TeamMember }> = ({ member }) => {
+  const getInitialSrc = (): string => {
+    if (member.photoUrl) return member.photoUrl;
+    if (member.id === 'dr-dk-agrawal') return '/images/team/dr-dk-agrawal.jpg';
+    if (member.id === 'swati-soam') return '/images/team/swati-soam.jpg';
+    return '';
+  };
+
+  const [imgSrc, setImgSrc] = useState<string>(getInitialSrc);
+  const [loadError, setLoadError] = useState<boolean>(false);
+
+  useEffect(() => {
+    let isCancelled = false;
+
+    // 1. If photoStoragePath is provided, pull fresh download URL from Firebase Storage
+    if (member.photoStoragePath && storage) {
+      const storageRef = ref(storage, member.photoStoragePath);
+      getDownloadURL(storageRef)
+        .then(downloadUrl => {
+          if (!isCancelled && downloadUrl) {
+            setImgSrc(downloadUrl);
+            setLoadError(false);
+          }
+        })
+        .catch(() => {
+          // Fall back to photoUrl or local assets
+          if (!isCancelled) {
+            if (member.photoUrl) {
+              setImgSrc(member.photoUrl);
+            } else if (member.id === 'dr-dk-agrawal') {
+              setImgSrc('/images/team/dr-dk-agrawal.jpg');
+            } else if (member.id === 'swati-soam') {
+              setImgSrc('/images/team/swati-soam.jpg');
+            }
+          }
+        });
+    } else if (member.photoUrl) {
+      setImgSrc(member.photoUrl);
+      setLoadError(false);
+    } else if (member.id === 'dr-dk-agrawal') {
+      setImgSrc('/images/team/dr-dk-agrawal.jpg');
+      setLoadError(false);
+    } else if (member.id === 'swati-soam') {
+      setImgSrc('/images/team/swati-soam.jpg');
+      setLoadError(false);
+    }
+
+    return () => {
+      isCancelled = true;
+    };
+  }, [member.photoUrl, member.photoStoragePath, member.id]);
+
+  const handleImageError = () => {
+    // If external URL or data URL fails, fallback to local verified assets for founders
+    if (member.id === 'dr-dk-agrawal' && imgSrc !== '/images/team/dr-dk-agrawal.jpg') {
+      setImgSrc('/images/team/dr-dk-agrawal.jpg');
+      setLoadError(false);
+    } else if (member.id === 'swati-soam' && imgSrc !== '/images/team/swati-soam.jpg') {
+      setImgSrc('/images/team/swati-soam.jpg');
+      setLoadError(false);
+    } else {
+      setLoadError(true);
+    }
+  };
+
+  if (!imgSrc || loadError) {
+    return (
+      <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl bg-gradient-to-br from-sky-100 to-sky-200 text-[#0B5A91] flex items-center justify-center font-bold text-2xl font-['Poppins'] shrink-0 shadow-xs border-2 border-white">
+        {member.fullName.split(' ').map(n => n[0]).join('').slice(0, 2)}
+      </div>
+    );
+  }
+
+  return (
+    <img
+      src={imgSrc}
+      alt={member.fullName}
+      onError={handleImageError}
+      loading="eager"
+      className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl object-cover border-2 border-white shadow-md shrink-0 block"
+    />
+  );
+};
+
 export const AboutPage: React.FC<AboutPageProps> = ({ navigate, openEnquiryModal }) => {
   const { aboutUsContent, teamMembers, brand } = useApp();
+  const [liveTeam, setLiveTeam] = useState<TeamMember[]>(teamMembers);
 
   // Update page title on mount
   useEffect(() => {
     document.title = 'About Us | VERIVIA GLOBAL';
   }, []);
 
+  // Directly subscribe to Firestore 'aboutUsTeam' on the live website to pull latest stored images
+  useEffect(() => {
+    try {
+      const unsub = onSnapshot(collection(db, 'aboutUsTeam'), (snapshot) => {
+        if (!snapshot.empty) {
+          const items = snapshot.docs.map(d => ({ id: d.id, ...d.data() } as TeamMember));
+          setLiveTeam(items.sort((a, b) => a.displayOrder - b.displayOrder));
+        }
+      }, (err) => {
+        console.warn('Live team listener notice:', err);
+      });
+      return () => unsub();
+    } catch {
+      // Fallback to app context
+    }
+  }, []);
+
+  // Sync when teamMembers from context updates
+  useEffect(() => {
+    if (teamMembers && teamMembers.length > 0) {
+      setLiveTeam(teamMembers);
+    }
+  }, [teamMembers]);
+
   const content = aboutUsContent && aboutUsContent.heroHeadline ? aboutUsContent : INITIAL_ABOUT_US_CONTENT;
-  const publishedTeam = (teamMembers && teamMembers.length > 0 ? teamMembers : INITIAL_TEAM_MEMBERS)
+  const publishedTeam = (liveTeam && liveTeam.length > 0 ? liveTeam : INITIAL_TEAM_MEMBERS)
     .filter(m => m.published)
     .sort((a, b) => a.displayOrder - b.displayOrder);
 
@@ -41,7 +158,6 @@ export const AboutPage: React.FC<AboutPageProps> = ({ navigate, openEnquiryModal
       {/* 1. HERO SECTION */}
       {/* ========================================================================= */}
       <section className="relative bg-gradient-to-br from-[#073656] via-[#0B5A91] to-[#1E6FA8] text-white py-20 lg:py-24 overflow-hidden">
-        {/* Subtle background ornamentation */}
         <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none" />
         <div className="absolute -top-32 -right-32 w-96 h-96 bg-sky-400/20 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute -bottom-32 -left-32 w-96 h-96 bg-[#2F80C9]/30 rounded-full blur-3xl pointer-events-none" />
@@ -133,17 +249,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ navigate, openEnquiryModal
                 <div className="space-y-6">
                   {/* Member Top: Photo + Name + Designation + Descriptor */}
                   <div className="flex flex-col sm:flex-row sm:items-center space-y-4 sm:space-y-0 sm:space-x-6">
-                    {member.photoUrl ? (
-                      <img
-                        src={member.photoUrl}
-                        alt={member.fullName}
-                        className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl object-cover border-2 border-white shadow-md shrink-0"
-                      />
-                    ) : (
-                      <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl bg-gradient-to-br from-sky-100 to-sky-200 text-[#0B5A91] flex items-center justify-center font-bold text-2xl font-['Poppins'] shrink-0 shadow-xs border-2 border-white">
-                        {member.fullName.split(' ').map(n => n[0]).join('').slice(0, 2)}
-                      </div>
-                    )}
+                    <TeamMemberPhoto member={member} />
 
                     <div className="space-y-1.5 min-w-0">
                       <div className="inline-block px-3 py-1 rounded-full bg-[#0B5A91] text-white text-xs font-bold tracking-wide uppercase">
@@ -161,9 +267,9 @@ export const AboutPage: React.FC<AboutPageProps> = ({ navigate, openEnquiryModal
                   </div>
 
                   {/* Member Biography */}
-                  <div className="space-y-3.5 text-xs sm:text-sm text-slate-600 leading-relaxed pt-2 border-t border-slate-200/60">
+                  <div className="space-y-3.5 text-xs sm:text-sm text-slate-600 leading-relaxed pt-2 border-t border-slate-200/60 text-justify">
                     {member.biography.split('\n\n').map((para, pIdx) => (
-                      <p key={pIdx}>{para}</p>
+                      <p key={pIdx} className="text-justify">{para}</p>
                     ))}
                   </div>
                 </div>

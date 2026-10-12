@@ -792,10 +792,21 @@ export const AboutUsAdmin: React.FC = () => {
 
                   {/* Profile Header: Photo + Info */}
                   <div className="flex items-start space-x-4">
-                    {member.photoUrl ? (
+                    {member.photoUrl || member.id === 'dr-dk-agrawal' || member.id === 'swati-soam' ? (
                       <img
-                        src={member.photoUrl}
+                        src={
+                          member.photoUrl ||
+                          (member.id === 'dr-dk-agrawal'
+                            ? '/images/team/dr-dk-agrawal.jpg'
+                            : '/images/team/swati-soam.jpg')
+                        }
                         alt={member.fullName}
+                        onError={(e) => {
+                          const fallback = member.id === 'dr-dk-agrawal' ? '/images/team/dr-dk-agrawal.jpg' : '/images/team/swati-soam.jpg';
+                          if ((e.currentTarget as HTMLImageElement).src !== fallback) {
+                            (e.currentTarget as HTMLImageElement).src = fallback;
+                          }
+                        }}
                         className="w-16 h-16 rounded-2xl object-cover border border-slate-200 shrink-0"
                       />
                     ) : (

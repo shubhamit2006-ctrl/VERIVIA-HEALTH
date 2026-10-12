@@ -114,7 +114,7 @@ export const INITIAL_TEAM_MEMBERS: TeamMember[] = [
     professionalDescriptor: 'Medical Experience | Public Healthcare | Holistic Healthcare',
     biography:
       'Dr. D. K. Agrawal brings nearly 40 years of experience across clinical practice, public healthcare and medical administration.\n\nA former Additional Director in the Uttar Pradesh Medical Health Department, he has served in clinical and public healthcare settings, bringing a longstanding medical perspective to the vision of VERIVIA GLOBAL.\n\nHis areas of professional focus include chronic disease management, infertility care for men and women, preventive healthcare and an integrated approach to wellbeing.\n\nHis experience informs our appreciation of the questions, concerns and decisions that can accompany a healthcare journey. His contribution to VERIVIA GLOBAL\'s vision is grounded in informed healthcare choices, compassionate guidance and an individual-centred approach.',
-    photoUrl: '',
+    photoUrl: '/images/team/dr-dk-agrawal.jpg',
     photoStoragePath: '',
     displayOrder: 1,
     published: true
@@ -126,7 +126,7 @@ export const INITIAL_TEAM_MEMBERS: TeamMember[] = [
     professionalDescriptor: 'Business Transformation | Technology | Operational Excellence',
     biography:
       'Swati Soam brings experience in enterprise technology implementation, business analysis, project management and digital transformation across India, the United States, Canada and Singapore.\n\nHer professional background includes working with platforms such as SAP SuccessFactors, EmployWise and Ramco Systems, helping organisations translate complex business requirements into structured, scalable solutions.\n\nHer strengths include stakeholder management, process improvement, agile delivery, requirements analysis and technology-enabled user experiences.\n\nAt VERIVIA GLOBAL, she brings this experience to the challenge of making healthcare coordination more organised, transparent and responsive. Her focus is on building processes and service experiences that help international healthcare seekers navigate the steps involved in exploring and arranging healthcare in India.',
-    photoUrl: '',
+    photoUrl: '/images/team/swati-soam.jpg',
     photoStoragePath: '',
     displayOrder: 2,
     published: true
